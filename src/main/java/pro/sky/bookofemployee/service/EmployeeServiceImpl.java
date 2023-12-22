@@ -5,36 +5,32 @@ import pro.sky.bookofemployee.Employee;
 import pro.sky.bookofemployee.exceptions.EmployeeAllreadyAddedException;
 import pro.sky.bookofemployee.exceptions.EmployeeNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final List<Employee> employeeList;
+    private Map<String, Employee> employees = new HashMap();
 
     public EmployeeServiceImpl() {
-        this.employeeList = new ArrayList<>();
+        this.employees = new HashMap<>();
     }
 
     @Override
     public Employee add(String surname, String name) {
         Employee employee = new Employee(surname, name);
-        if (employeeList.add(employee)) {
+        if (employees.containsKey(employee.getFullName())) {
             throw new EmployeeAllreadyAddedException("Сотрудник уже зачислен!");
         }
-        employeeList.add(employee);
+        employees.put(employee.getFullName(), employee);
         return employee;
     }
 
     @Override
     public Employee remove(String surname, String name) {
         Employee employee = new Employee(surname, name);
-        if (employeeList.contains(employee)) {
-            employeeList.remove(employee);
-            return employee;
+        if (employees.containsKey(employee.getFullName())) {
+            return employees.remove(employee.getFullName());
         }
         throw new EmployeeNotFoundException("Сотрудник не найден");
     }
@@ -42,14 +38,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee find(String surname, String name) {
         Employee employee = new Employee(surname, name);
-        if (employeeList.contains(employee)) {
-            return employee;
+        if (employees.containsKey(employee.getFullName())) {
+            return employees.get(employee.getFullName());
         }
         throw new EmployeeNotFoundException("Сотрудник не найден");
     }
 
     @Override
     public Collection<Employee> findAll() {
-        return Collections.unmodifiableList(employeeList);
+        return Collections.unmodifiableCollection(employees.values());
     }
 }

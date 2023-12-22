@@ -8,6 +8,10 @@ public class Employee {
     private final String surname;
     private final String name;
 
+    public String getFullName() {
+        return name + " " + surname;
+    }
+
 
     public Employee(String surname, String name) {
         this.surname = surname;
