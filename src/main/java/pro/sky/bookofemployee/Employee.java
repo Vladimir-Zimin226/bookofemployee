@@ -1,6 +1,11 @@
 package pro.sky.bookofemployee;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Locale;
 import java.util.Objects;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 public class Employee {
 
@@ -8,14 +13,35 @@ public class Employee {
     private final String surname;
     private final String name;
 
+    private int departament;
+    private int salary;
+
+    public int getDepartament() {
+        return departament;
+    }
+
+    public void setDepartament(int departament) {
+        this.departament = departament;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
     public String getFullName() {
         return name + " " + surname;
     }
 
 
-    public Employee(String surname, String name) {
-        this.surname = surname;
-        this.name = name;
+    public Employee(String surname, String name, int departament, int salary) {
+        this.surname = capitalize(surname.toLowerCase());
+        this.name = capitalize(name.toLowerCase());;
+        this.departament = departament;
+        this.salary = salary;
     }
 
     public String getSurname() {
