@@ -11,7 +11,7 @@ public interface EmployeeService {
 
     Employee find(String surname, String name, int departamentId, int salary);
 
-
     Collection<Employee> findAll();
 
+    void validateInput(String surname, String name);
 }

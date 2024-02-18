@@ -1,8 +1,5 @@
 package pro.sky.bookofemployee;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Locale;
 import java.util.Objects;
 
 import static org.apache.commons.lang3.StringUtils.*;
@@ -13,15 +10,15 @@ public class Employee {
     private final String surname;
     private final String name;
 
-    private int departament;
+    private int department;
     private int salary;
 
-    public int getDepartament() {
-        return departament;
+    public int getDepartment() {
+        return department;
     }
 
-    public void setDepartament(int departament) {
-        this.departament = departament;
+    public void setDepartment(int departament) {
+        this.department = departament;
     }
 
     public int getSalary() {
@@ -40,7 +37,7 @@ public class Employee {
     public Employee(String surname, String name, int departament, int salary) {
         this.surname = capitalize(surname.toLowerCase());
         this.name = capitalize(name.toLowerCase());;
-        this.departament = departament;
+        this.department = departament;
         this.salary = salary;
     }
 
@@ -70,14 +67,13 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(surname, employee.surname) && Objects.equals(name, employee.name);
+        return department == employee.department && salary == employee.salary && Objects.equals(surname, employee.surname) && Objects.equals(name, employee.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(surname, name);
+        return Objects.hash(surname, name, department, salary);
     }
-
 
     private String validateSurname(String surname) {
         return surname == null ? "WithoutSurname" : surname;

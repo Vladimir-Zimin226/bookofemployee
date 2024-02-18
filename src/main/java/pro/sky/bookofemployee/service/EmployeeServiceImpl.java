@@ -1,9 +1,8 @@
 package pro.sky.bookofemployee.service;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.bookofemployee.Employee;
-import pro.sky.bookofemployee.exceptions.EmployeeAllreadyAddedException;
+import pro.sky.bookofemployee.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.bookofemployee.exceptions.EmployeeNotFoundException;
 import pro.sky.bookofemployee.exceptions.InvalidInputException;
 
@@ -14,7 +13,7 @@ import static org.apache.commons.lang3.StringUtils.*;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private Map<String, Employee> employees = new HashMap();
+    private Map<String, Employee> employees;
 
     public EmployeeServiceImpl() {
         this.employees = new HashMap<>();
@@ -27,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee employee = new Employee(surname, name, departamentId, salary);
         if (employees.containsKey(employee.getFullName())) {
-            throw new EmployeeAllreadyAddedException("Сотрудник уже зачислен!");
+            throw new EmployeeAlreadyAddedException("Сотрудник уже зачислен!");
         }
         employees.put(employee.getFullName(), employee);
         return employee;
@@ -63,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-    private void validateInput(String name, String surname) {
+    public void validateInput(String name, String surname) {
         if (!(isAlpha(name) && isAlpha(surname))) {
             throw new InvalidInputException();
         }
